@@ -25,7 +25,7 @@ def wall_filter(gray):
 
     # noise removal
     kernel = np.ones((3,3),np.uint8)
-    opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN,kernel, iterations = 2)
+    opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN,kernel, iterations = 3)
 
     sure_bg = cv2.dilate(opening,kernel,iterations=3)
 
