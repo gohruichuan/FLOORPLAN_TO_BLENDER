@@ -1,0 +1,7 @@
+opencv-python==4.2.0.34 
+numpy==1.17.3
+configparser==3.5.0
+future-fstrings==1.2.0
+pyfiglet
+
+# TODO update these!
