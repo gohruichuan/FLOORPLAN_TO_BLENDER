@@ -32,6 +32,8 @@ This code is tested on Windows 10, Blender 2.79, in January 2019.
 Our helpful functions
 '''
 
+
+
 def read_from_file(file_path):
     '''
     Read from file
@@ -125,7 +127,6 @@ def create_custom_mesh(objname, verts, faces, pos = None, rot = None, mat = None
     return myobject
 
 def create_mat(rgb_color):
-    print('rgb_color ', rgb_color)
     mat = bpy.data.materials.new(name="MaterialName") #set new material to variable
     # mat.diffuse_color = rgb_color #change to random color
     mat.diffuse_color = [0.8, 0.8, 0.8, 1] #change to random color
@@ -135,6 +136,7 @@ def create_mat(rgb_color):
 Main functionallity here!
 '''
 def main(argv):
+    
     '''
     Create Walls
     All walls are square
@@ -144,33 +146,36 @@ def main(argv):
     # Remove starting object cube
     # Select all
     objs = bpy.data.objects
-    objs.remove(objs["Cube"], do_unlink=True)
+    if "Cube" in objs:
+        objs.remove(objs["Cube"], do_unlink=True)
 
     if(len(argv) > 6): # Note YOU need 7 arguments!
         program_path = argv[5]
 
-    else:
-        exit(0)
+#    else:
+#        exit(0)
 
 
     '''
     Instantiate
     '''
-    for i in range(6,len(argv)):
+    for i in range(0,len(argv)):
         base_path = argv[i]
+        program_path = ''
         create_floorplan(base_path, program_path, i)
 
     '''
     Save to file
     TODO add several save modes here!
     '''
+    program_path = 'D:/projects/BTO'
     bpy.ops.wm.save_as_mainfile(filepath=program_path + "/Target" +"/floorplan.blend")
    
 
     '''
     Send correct exit code
     '''
-    exit(0)
+#    exit(0)
 
 
 def create_floorplan(base_path,program_path, name=0):
@@ -178,21 +183,21 @@ def create_floorplan(base_path,program_path, name=0):
     parent, parent_mesh = init_object("Floorplan"+str(name))
     
     #base_path = base_path.replace('/','\\')
+    print('base_path', base_path)
+    path_to_wall_faces_file = "D:/projects/BTO/Data/0/wall_faces"
+    path_to_wall_verts_file = "D:/projects/BTO/Data/0/wall_verts"
 
-    path_to_wall_faces_file = program_path +"/" + base_path + "wall_faces"
-    path_to_wall_verts_file = program_path +"/" + base_path + "wall_verts"
+    path_to_floor_faces_file = "D:/projects/BTO/Data/0/floor_faces"
+    path_to_floor_verts_file = "D:/projects/BTO/Data/0/floor_verts"
 
-    path_to_floor_faces_file = program_path +"/" +base_path + "floor_faces"
-    path_to_floor_verts_file = program_path +"/" +base_path + "floor_verts"
-
-    path_to_rooms_faces_file = program_path +"/" + base_path + "rooms_faces"
-    path_to_rooms_verts_file = program_path +"/" + base_path + "rooms_verts"
+    path_to_rooms_faces_file = "D:/projects/BTO/Data/0/rooms_faces"
+    path_to_rooms_verts_file = "D:/projects/BTO/Data/0/rooms_verts"
 
 # TODO add window, doors here!
 #    path_to_windows_faces_file = program_path +"\\" + base_path + "windows_faces"
 #    path_to_windows_verts_file = program_path +"\\" + base_path + "windows_verts"
 
-    path_to_transform_file = program_path+"/" + base_path + "transform"
+    path_to_transform_file = "D:/projects/BTO/Data/0/transform"
 
     '''
     Get transform
